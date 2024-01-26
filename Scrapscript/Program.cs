@@ -95,7 +95,7 @@ namespace Scrapscript
             token = l.ReadOne();
             Console.WriteLine(((Symbol)token).Value);
 
-            Token.Tokenize(ps, operChars, "[ 1 2 3.4 ] |> (one) { #smooth }");
+            var obj = new Parse.Parser(ps, highestPrec, Token.Tokenize(ps, operChars, "x + y + z . z = x + y . x = 1 . y = 2")).Parse(0);
         }
     }
 }

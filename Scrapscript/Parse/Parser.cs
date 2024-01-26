@@ -40,13 +40,13 @@
 
         public Object Parse(double p = 0.0)
         {
-            if (this.tokens.Any())
+            if (!this.tokens.Any())
             {
                 throw new Exception("unexpected end of input");
             }
 
             var token = this.tokens.Dequeue();
-            Object l;
+            Object? l = null;
 
             if (token is Tokenize.Int)
             {
@@ -194,6 +194,11 @@
                 throw new Exception($"unexpected token {token}");
             }
 
+            if (l == null)
+            {
+                throw new Exception("unreachable");
+            }
+
             while (true)
             {
                 if (!tokens.Any())
@@ -201,7 +206,114 @@
                     break;
                 }
 
+                Token tok = tokens.Peek();
 
+                if (tok is RightParen || tok is RightBracket || tok is RightBrace)
+                {
+                    break;
+                }
+
+                if (!(tok is Operator))
+                {
+                    Prec nonOpPrec = this.ps[string.Empty];
+
+                    if (nonOpPrec.Pl < p)
+                    {
+                        break;
+                    }
+
+                    l = new Apply(l, this.Parse(nonOpPrec.Pr));
+                    continue;
+                }
+
+                Operator op = (Operator)tok;
+
+                Prec prec = this.ps[op.Value];
+
+                if (prec.Pl < p)
+                {
+                    break;
+                }
+
+                tokens.Dequeue();
+
+                if (op.Value == "=")
+                {
+                    if (!(l is Var))
+                    {
+                        throw new Exception($"expected variable in assignment {l}");
+                    }
+
+                    l = new Assign((Var)l, this.Parse(prec.Pr));
+                }
+                else if (op.Value == "->")
+                {
+                    l = new Function(l, this.Parse(prec.Pr));
+                }
+                else if (op.Value == "|>")
+                {
+                    l = new Apply(this.Parse(prec.Pr), l);
+                }
+                else if (op.Value == "<|")
+                {
+                    l = new Apply(l, this.Parse(prec.Pr));
+                }
+                else if (op.Value == ">>")
+                {
+                    l = new Compose(l, this.Parse(prec.Pr));
+                }
+                else if (op.Value == "<<")
+                {
+                    l = new Compose(this.Parse(prec.Pr), l);
+                }
+                else if (op.Value == ".")
+                {
+                    l = new Where(l, this.Parse(prec.Pr));
+                }
+                else if (op.Value == "?")
+                {
+                    l = new Assert(l, this.Parse(prec.Pr));
+                }
+                else if (op.Value == "@")
+                {
+                    l = new Access(l, this.Parse(prec.Pr));
+                }
+                else
+                {
+                    l = new Binop(this.BinopKindFromStr(op.Value), l, this.Parse(prec.Pr));
+                }
+            }
+
+            return l;
+        }
+
+        private BinopKind BinopKindFromStr(string s)
+        {
+            switch (s)
+            {
+                case "+": return BinopKind.Add;
+                case "-": return BinopKind.Sub;
+                case "*": return BinopKind.Mul;
+                case "/": return BinopKind.Div;
+                case "//": return BinopKind.FloorDiv;
+                case "^": return BinopKind.Exp;
+                case "%": return BinopKind.Mod;
+                case "==": return BinopKind.Equal;
+                case "/=": return BinopKind.NotEqual;
+                case "<": return BinopKind.Less;
+                case ">": return BinopKind.Greater;
+                case "<=": return BinopKind.LessEqual;
+                case ">=": return BinopKind.GreaterEqual;
+                case "&&": return BinopKind.BoolAnd;
+                case "||": return BinopKind.BoolOr;
+                case "++": return BinopKind.StringConcat;
+                case ">+": return BinopKind.ListCons;
+                case "+<": return BinopKind.ListAppend;
+                case "!": return BinopKind.RightEval;
+                case ":": return BinopKind.HasType;
+                case "|>": return BinopKind.Pipe;
+                case "<|": return BinopKind.ReversePipe;
+                default: throw new Exception($"unrecognised Binop: {s}");
             }
         }
     }
