@@ -1,4 +1,4 @@
-﻿namespace ScrapScript.Tokenize
+﻿namespace Scrapscript.Tokenize
 {
     public class Symbol : ValueContainer<string>
     {

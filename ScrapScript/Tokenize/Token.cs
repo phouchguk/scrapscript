@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 
-using ScrapScript.Scrap;
+using Scrapscript.Scrap;
 
-namespace ScrapScript.Tokenize
+namespace Scrapscript.Tokenize
 {
     public abstract class Token
     {

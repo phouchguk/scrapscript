@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-using ScrapScript.Scrap;
+using Scrapscript.Scrap;
 
-namespace ScrapScript.Tokenize
+namespace Scrapscript.Tokenize
 {
     public class Lexer
     {

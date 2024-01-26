@@ -1,4 +1,4 @@
-﻿namespace ScrapScript.Parse
+﻿namespace Scrapscript.Parse
 {
     public class ValueContainer<T> : Object
     {

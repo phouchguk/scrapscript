@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace ScrapScript.Parse
+namespace Scrapscript.Parse
 {
     public class Record : Object
     {

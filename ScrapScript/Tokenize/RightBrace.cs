@@ -1,4 +1,4 @@
-﻿namespace ScrapScript.Tokenize
+﻿namespace Scrapscript.Tokenize
 {
     public class RightBrace : Token
     {

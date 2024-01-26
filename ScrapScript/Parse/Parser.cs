@@ -1,4 +1,4 @@
-﻿namespace ScrapScript.Parse
+﻿namespace Scrapscript.Parse
 {
     using System;
     using System.Collections.Generic;
@@ -6,8 +6,8 @@
     using System.Runtime.CompilerServices;
     using System.Text.RegularExpressions;
 
-    using ScrapScript.Scrap;
-    using ScrapScript.Tokenize;
+    using Scrapscript.Scrap;
+    using Scrapscript.Tokenize;
 
     public class Parser
     {

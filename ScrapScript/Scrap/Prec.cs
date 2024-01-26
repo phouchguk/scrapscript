@@ -1,4 +1,4 @@
-﻿namespace ScrapScript.Scrap
+﻿namespace Scrapscript.Scrap
 {
     public class Prec
     {

@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 
-using ScrapScript.Scrap;
-using ScrapScript.Tokenize;
+using Scrapscript.Scrap;
+using Scrapscript.Tokenize;
 
-namespace ScrapScript
+namespace Scrapscript
 {
     internal class Program
     {
