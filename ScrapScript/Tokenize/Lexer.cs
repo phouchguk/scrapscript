@@ -1,4 +1,7 @@
-﻿using System.Text;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 
 using ScrapScript.Scrap;
 
@@ -76,7 +79,7 @@ namespace ScrapScript.Tokenize
                 if (!char.IsWhiteSpace(c)) break;
             }
 
-            if (c == '\0') return new Eof();
+            if (c == '\0') return Eof.Instance;
 
             if (c == '"') return this.ReadString();
 
@@ -125,7 +128,7 @@ namespace ScrapScript.Tokenize
                 buf.Append(c);
             }
 
-            return new String(buf.ToString()) { LineNo = this.lineNo  };
+            return new Text(buf.ToString()) { LineNo = this.lineNo  };
         }
 
         void ReadComment()

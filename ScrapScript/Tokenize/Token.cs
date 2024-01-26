@@ -1,4 +1,6 @@
-﻿using ScrapScript.Scrap;
+﻿using System.Collections.Generic;
+
+using ScrapScript.Scrap;
 
 namespace ScrapScript.Tokenize
 {

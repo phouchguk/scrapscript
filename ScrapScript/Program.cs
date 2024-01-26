@@ -1,4 +1,7 @@
-﻿using ScrapScript.Scrap;
+﻿using System;
+using System.Collections.Generic;
+
+using ScrapScript.Scrap;
 using ScrapScript.Tokenize;
 
 namespace ScrapScript
@@ -76,7 +79,7 @@ namespace ScrapScript
             l = Lex("   \"Hello, World!\"");
             token = l.ReadOne();
 
-            Console.WriteLine(((Tokenize.String)token).Value);
+            Console.WriteLine(((Tokenize.Text)token).Value);
 
             l = Lex("   |> ");
             token = l.ReadOne();
